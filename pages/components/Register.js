@@ -1,10 +1,30 @@
 import { useState } from "react";
-import {connectContract} from '../../utils/ether'
+import {connectContract} from '../../utils/ether';
+import {getDefaultProfile} from '../../utils/lens';
+import {getAccount} from '../../utils/ether';
+import Verification from "./Verification";
 const Register = () =>{
     const[showRegister,setShowRegister] = useState(false)
     const registerWithWallet =async()=>{
         let iris = await connectContract();
         await iris.register();
+
+    }
+    const registerWithLens =async() =>{
+        let account = await getAccount();
+        let profile =await getDefaultProfile(account);
+        console.log(profile);
+        if (profile.defaultProfile) {
+          let name = profile.defaultProfile.name;
+          let pic = profile.defaultProfile.picture.original.url;
+          let iris = await connectContract();
+          await iris.register();
+          await iris.addName(name);
+          await iris.addProfilepic(pic);
+        } else {
+          console.log("No lens profile");
+        }
+        
 
     }
     return (
@@ -18,9 +38,16 @@ const Register = () =>{
           Register
         </button>
         {showRegister && (
-          <div className="flex absolute bottom-3.5">
-            <button className="p-2" onClick={registerWithWallet}>Register with wallet</button>
-            <button>Register with len profile</button>
+          <div>
+            <div className="flex absolute bottom-3.5">
+              <button className="p-2" onClick={registerWithWallet}>
+                Register with wallet
+              </button>
+              <button onClick={registerWithLens}>
+                Register with len profile
+              </button>
+            </div>
+            <Verification className="flex absolute bottom-4.5" />
           </div>
         )}
       </div>

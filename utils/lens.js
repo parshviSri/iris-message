@@ -1,8 +1,5 @@
+import { gql } from "@apollo/client/core";
 import { apolloClient } from "./apollo-client";
-// this is showing you how you use it with react for example
-// if your using node or something else you can import using
-// @apollo/client/core!
-import { gql } from "@apollo/client";
 
 const GET_DEFAULT_PROFILES = `
   query($request: DefaultProfileRequest!) {
@@ -79,17 +76,17 @@ const GET_DEFAULT_PROFILES = `
           recipient
         }
         ... on ProfileFollowModuleSettings {
-         type
+          type
         }
         ... on RevertFollowModuleSettings {
-         type
+          type
         }
       }
     }
   }
 `;
 
-export const getDefaultProfile = (ethereumAddress) => {
+const getDefaultProfileRequest = (ethereumAddress) => {
   return apolloClient.query({
     query: gql(GET_DEFAULT_PROFILES),
     variables: {
@@ -99,3 +96,14 @@ export const getDefaultProfile = (ethereumAddress) => {
     },
   });
 };
+
+export const getDefaultProfile = async (_address) => {
+  const address = _address;
+  console.log("get default profile: address", address);
+
+  const result = await getDefaultProfileRequest(address);
+
+  return result.data;
+};
+
+
