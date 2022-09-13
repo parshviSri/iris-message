@@ -3,11 +3,15 @@ import {connectContract} from '../../utils/ether';
 import {getDefaultProfile} from '../../utils/lens';
 import {getAccount} from '../../utils/ether';
 import Verification from "./Verification";
+import { useRouter } from "next/router";
 const Register = () =>{
+    const router = useRouter();
+
     const[showRegister,setShowRegister] = useState(false)
     const registerWithWallet =async()=>{
         let iris = await connectContract();
         await iris.register();
+       router.push({ pathname: "/dashboard"});
 
     }
     const registerWithLens =async() =>{
@@ -21,12 +25,16 @@ const Register = () =>{
           await iris.register();
           await iris.addName(name);
           await iris.addProfilepic(pic);
+          router.push({
+            pathname: "/dashboard",
+          });
         } else {
           console.log("No lens profile");
         }
         
 
     }
+    
     return (
       <div>
         <button
