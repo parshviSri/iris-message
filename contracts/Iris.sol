@@ -46,5 +46,8 @@ contract Iris {
         return userId[_tid];
         
     }
+    function searchUser(address _user) external view checkUserExist returns(User memory){
+        return contactBook[_user];
+    }
     
 }
