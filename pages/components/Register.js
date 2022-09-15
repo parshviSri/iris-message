@@ -9,15 +9,18 @@ const Register = () =>{
 
     const[showRegister,setShowRegister] = useState(false)
     const registerWithWallet =async()=>{
+        let account = (await getAccount()).slice(0,5)+'...';
+        // console.log(account);
         let iris = await connectContract();
         await iris.register();
+        await iris.addName(account);
        router.push({ pathname: "/dashboard"});
 
     }
     const registerWithLens =async() =>{
         let account = await getAccount();
         let profile =await getDefaultProfile(account);
-        console.log(profile);
+        // console.log(profile);
         if (profile.defaultProfile) {
           let name = profile.defaultProfile.name;
           let pic = profile.defaultProfile.picture.original.url;

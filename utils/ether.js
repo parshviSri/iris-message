@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import Iris from '../artifacts/contracts/Iris.sol/Iris.json';
 import WorldCoinIris from "../artifacts/contracts/WorldCoinIris.sol/WorldCoinIris.json";
 
-const contractAddress = "0x11B8cde54E05e48b4328DBC25Fa50ED10867Bd1E";
+const contractAddress = "0xE47B31dbe24d417f6625530e8557C7D88e7ECD30";
 const WorldCoinAddress = "0x2b7913901CCeDE2ffFb5a499ad7afC27e7603E47";
 export const getAccount = async () => {
   await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -14,7 +14,6 @@ export const getAccount = async () => {
 export const connectContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
-  console.log(process.env.NEXT_APP_CONTRACT_ADDRESS);
 
      const contract = new ethers.Contract(contractAddress, Iris.abi, signer);
      return contract;

@@ -1,24 +1,51 @@
 /* eslint-disable @next/next/no-img-element */
 import SearchBar from "./SearchBar";
-import{useEffect, useState} from 'react';
-const Contacts =  (props) => {
-  const account = (props.accountInfo.current).slice(0,5)+'...';
-  const user = props.userInfo.current;
-  console.log(account);
+import{useEffect, useRef, useState} from 'react';
+import { connectContract, getAccount } from "../../utils/ether";
+import axios from "axios";
 
-  
+const Contacts =  (props) => {
+  const user = useRef()
+  // console.log(user);
+  const contact = useRef();
+  const addNewContact = (_contact) => {
+    // console.log(contact);
+   contact.current.push(_contact)
+    
+  };
+   useEffect(() => {
+     const getuser = async () => {
+       let iris = await connectContract();
+       user.current = await iris.getUser();
+       if(user.current.messageLog){
+        let m = await axios.get(user.current.messageLog);
+        let a =[]
+       for(let key in m.data){
+        let u = await iris.getUserById(parseInt(key));
+        a.push(u)
+       }
+        console.log(m.data);
+        contact.current = a;
+       }
+     };
+     getuser();
+   }, []);
+  const openChat=(callee) =>{
+    props.getCallee(callee)
+
+  }
   return (
     <div>
       <div className=" flex w-2/12 sm:w-4/12 px-4">
         <img
-          src={user?.profile || "/profile.png"}
+          src={user.current?.profile || "/profile.png"}
           alt="..."
           className="shadow rounded-full max-w-18 h-18 align-middle border-none"
         />
-        <div className="p-4">{user?.name ||account}</div>
+        <div className="p-4">{user.current?.name}</div>
         <div></div>
       </div>
-      <SearchBar />
+      <SearchBar addContact ={addNewContact}/>
       <div className="flex m-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,30 +65,25 @@ const Contacts =  (props) => {
         <div className="text-2xl font-sans px-6">Messages</div>
       </div>
       <div>
-        {user.messageLog &&
-          user.messageLog.map((user, index) => {
+        {contact.current &&
+          contact.current.map((user, index) => {
             return (
               <div
                 key={index}
                 className="flex border-y-1 border-slate"
-                onClick={() => {
-                  sendCallerId(user);
-                }}
               >
-                <div className=" flex w-2/12 sm:w-4/12 px-4">
+                <div className=" flex w-2/12 sm:w-4/12 px-4" onClick={openChat(user)}>
                   <img
-                    src={user.pic}
+                    src={user.pic ||'/profile.png'}
                     alt="..."
                     className="shadow rounded-full max-w-8 h-8 align-middle border-none"
-                    onClick={sendCallerId}
                   />
-                  <div className="p-4">{user.name}</div>
+                  <div className="p-4">{user.name||'unknown'}</div>
                   <div></div>
                 </div>
               </div>
             );
           })}
-        {user.messageLog || <div>Add people to contacts</div>}
       </div>
     </div>
   );

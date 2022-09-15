@@ -11,7 +11,7 @@ const NavBar = () => {
         <div
           className="font-extrabold text-transparent text-4xl m-4 px-4 bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-600"
           onClick={() => {
-            console.log("in iris");
+            // console.log("in iris");
           }}
         >
           IRIS

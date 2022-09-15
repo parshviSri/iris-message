@@ -3,20 +3,27 @@ import { useState } from "react";
 import { connectContract } from "../../utils/ether";
 
 const SearchBar = (props) => {
+  
   const [search, setSearch] = useState("");
+  
   const [exist, setExsist] = useState({
     search:false,
     invalid:false
   });
+
+  const[userData,setUserData] = useState(null);
+
   const [foundUser, setFoundUser] = useState("");
+
   const [foundUserPic, setFoundUserPic] = useState("");
+
   const searchUser = async () => {
     const iris = await connectContract();
-    let userData = await iris.searchUser(search);
-    console.log(parseInt(userData.tokenId._hex));
-    if(parseInt(userData.tokenId._hex)>0){
-        setFoundUser(userData.name || search.slice(0, 5) + "....");
-        setFoundUserPic(userData.profile || "/profile.png");
+    let _userData = await iris.searchUser(search);
+    setUserData(_userData)
+    if(parseInt(_userData.tokenId._hex)>0){
+        setFoundUser(_userData.name || search.slice(0, 5) + "....");
+        setFoundUserPic(_userData.profile || "/profile.png");
         setExsist({search:true,invalid:false});
     }
     else{
@@ -24,8 +31,10 @@ const SearchBar = (props) => {
 
     }
   };
-  const addtocontact = (userData) =>{
-    props.addContact(userData);
+
+
+  const addtocontact = () =>{
+     props.addContact(userData);
   }
   return (
     <div>

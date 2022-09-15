@@ -49,5 +49,8 @@ contract Iris {
     function searchUser(address _user) external view checkUserExist returns(User memory){
         return contactBook[_user];
     }
+    function getUserById(uint256 _tid) external view checkUserExist returns (User memory){
+        return contactBook[userId[_tid]];
+    }
     
 }

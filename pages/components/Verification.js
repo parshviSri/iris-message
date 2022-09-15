@@ -8,7 +8,7 @@ const Verification = () => {
   const[verify,setVerify] = useState(false)
 
   const verfiyUser=async(verificationResponse)=>{
-    console.log(verificationResponse);
+    // console.log(verificationResponse);
     let iris = await connectContract()
     if(verificationResponse){
       let account = await getAccount()
