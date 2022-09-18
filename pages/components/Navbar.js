@@ -6,14 +6,14 @@ const NavBar = () => {
   const router = useRouter();
   return (
     <div className="flex relative p-6">
-      <div className="float-left flex">
+      <div
+        className="float-left flex"
+        onClick={() => {
+          router.push({ pathname: "/" });
+        }}
+      >
         <img src="./logo.png" alt="logo of flower" className="w-16 h-20" />
-        <div
-          className="font-extrabold text-transparent text-4xl m-4 px-4 bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-600"
-          onClick={() => {
-            // console.log("in iris");
-          }}
-        >
+        <div className="font-extrabold text-transparent text-4xl m-4 px-4 bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-600">
           IRIS
         </div>
       </div>

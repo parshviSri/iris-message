@@ -7,11 +7,13 @@ import axios from "axios";
 const Contacts =  (props) => {
   const user = useRef()
   // console.log(user);
-  const contact = useRef();
+  const contact = useRef([]);
   const addNewContact = (_contact) => {
-    // console.log(contact);
-   contact.current.push(_contact)
-    
+     console.log(contact.current);
+     console.log(_contact);
+     if (contact.current){ contact.current = [...contact.current, _contact]}
+     else{contact.current = [_contact]}
+    console.log(contact.current);
   };
    useEffect(() => {
      const getuser = async () => {
@@ -38,14 +40,33 @@ const Contacts =  (props) => {
     <div>
       <div className=" flex w-2/12 sm:w-4/12 px-4">
         <img
-          src={user.current?.profile || "/profile.png"}
+          src={user.current?.profilepic || "/profile.png"}
           alt="..."
           className="shadow rounded-full max-w-18 h-18 align-middle border-none"
         />
         <div className="p-4">{user.current?.name}</div>
-        <div></div>
+        <div>
+          {user.current?.verified && (
+            <div className="text-green-500 p-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+                />
+              </svg>
+            </div>
+          )}
+        </div>
       </div>
-      <SearchBar addContact ={addNewContact}/>
+      <SearchBar addContact={addNewContact} />
       <div className="flex m-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -68,17 +89,17 @@ const Contacts =  (props) => {
         {contact.current &&
           contact.current.map((user, index) => {
             return (
-              <div
-                key={index}
-                className="flex border-y-1 border-slate"
-              >
-                <div className=" flex w-2/12 sm:w-4/12 px-4" onClick={openChat(user)}>
+              <div key={index} className="flex border-y-1 border-slate">
+                <div
+                  className=" flex w-2/12 sm:w-4/12 px-4"
+                  onClick={openChat(user)}
+                >
                   <img
-                    src={user.pic ||'/profile.png'}
+                    src={user.pic || "/profile.png"}
                     alt="..."
                     className="shadow rounded-full max-w-8 h-8 align-middle border-none"
                   />
-                  <div className="p-4">{user.name||'unknown'}</div>
+                  <div className="p-4">{user.name || "unknown"}</div>
                   <div></div>
                 </div>
               </div>

@@ -52,5 +52,11 @@ contract Iris {
     function getUserById(uint256 _tid) external view checkUserExist returns (User memory){
         return contactBook[userId[_tid]];
     }
+    function getAddressById(uint256 _tid) external view checkUserExist returns (address){
+        return userId[_tid];
+    }
+    function updateMessageLog(uint256 _id,string memory  _messageLog) external checkUserExist {
+        contactBook[userId[_id]].messageLog =_messageLog;
+    }
     
 }
