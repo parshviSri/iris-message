@@ -2,7 +2,7 @@ import { useState, useRef,useEffect } from "react";
 import {connectContract} from '../../utils/ether';
 import {getDefaultProfile} from '../../utils/lens';
 import {getAccount} from '../../utils/ether';
-// import Verification from "./Verification";
+import Verification from "./Verification";
 import { useRouter } from "next/router";
 import {subscribeChannel, recieveNotification} from '../../utils/ens';
 import Notification from "./Notification";
@@ -93,7 +93,7 @@ const Register = () =>{
         )}
         {notifications.current && (
           <div>
-            {/* <Verification className="flex absolute bottom-4.5" /> */}
+            <Verification className="flex absolute bottom-4.5" />
             <Notification notification={notifications.current} />
           </div>
         )}

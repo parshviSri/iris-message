@@ -61,7 +61,6 @@ contract WorldCoinIris {
 
         // Finally, execute your logic here, for example issue a token, NFT, etc...
         // Make sure to emit some kind of event afterwards!
-        emit Verify(true);
     
     }
 }
