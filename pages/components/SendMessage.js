@@ -2,9 +2,10 @@
 import { useState } from "react";
 import { connectContract } from "../../utils/ether";
 import { addFile } from "../../utils/ipfs";
+import { sendNotification } from "../../utils/ens";
 import axios from "axios";
 const SendMessage = (props) => {
-  let user = props.user.current
+  let user = props.user
   console.log(props.receiver);
   console.log(user);
   const [message, setMessage] = useState("");
@@ -78,11 +79,69 @@ const SendMessage = (props) => {
       let iris = await connectContract();
       await iris.addMessage(url);
     }
+    await updateSenderLog();
+    let iris = await connectContract();
+     let trans =await iris.getAddressById(tokenId);
+     await sendNotification(trans, user, 'new message');
+  }
+  const updateSenderLog = async() =>{
+    let today = new Date();
+    let time = today.getHours() <= 12 ? "AM" : "PM";
+    if (user.messageLog) {
+      let m = await axios.get(props.receiver.messageLog);
+      console.log(m);
+      let _token = parseInt(user?.tokenId?._hex);
+      for (let key in m.data) {
+        console.log(tokenId, key);
+
+        if (key == _token) {
+          let _message = {
+            sender: user.name,
+            reciever: props.receiver.name,
+            text: message,
+            image: image,
+            file: file,
+            star: false,
+            time: today.getHours() + ":" + today.getMinutes() + time,
+          };
+          m.data[key]["message"].push(_message);
+          let b = m.data;
+          console.log(b);
+          let c = JSON.stringify(b);
+          let url = await addFile(c);
+          let iris = await connectContract();
+          await iris.updateMessageLog(tokenId,url);
+        }
+      }
+    } else {
+      let _token = parseInt(user?.tokenId?._hex);
+      let _message = {};
+      _message[_token] = {
+        name: user.name,
+        pic: user.profilepic,
+        message: [
+          {
+            sender: user.name,
+            reciever: props.receiver.name,
+            text: message,
+            image: image,
+            file: file,
+            star: false,
+            time: today.getHours() + ":" + today.getMinutes() + time,
+          },
+        ],
+      };
+      let m = JSON.stringify(_message);
+      let url = await addFile(m);
+      let iris = await connectContract();
+      await iris.updateMessageLog(tokenId,url);
+    }
+
   }
   
 
   return (
-    <div className="shadow-md rounded absolute bottom-0 w-full">
+    <div className="shadow-md rounded bottom-0 w-full">
       <div className="border  rounded   focus:border-blue-500 focus:outline-none">
         <div>{image && <img src={image} alt="send" width={124} />}</div>
 
