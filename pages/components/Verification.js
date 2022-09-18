@@ -1,8 +1,8 @@
 
 
-  // import { WorldIDWidget } from "@worldcoin/id";
+ //import { WorldIDWidget } from "@worldcoin/id";
 import dynamic from "next/dynamic";
- const  WorldIDWidget  = dynamic(() =>import("@worldcoin/id"),{ssr:false});
+  const  {WorldIDWidget}  = dynamic(() =>import("@worldcoin/id"),{ssr:false});
 
 import { useState } from "react";
 import {
@@ -42,7 +42,7 @@ const Verification = () => {
   }
     return (
       <div>
-        {!verify && (
+        {verify && (
           <div>
             <WorldIDWidget
               actionId="wid_staging_6234c67155f2b16af83d9a526f10cfe2" // obtain this from developer.worldcoin.org
