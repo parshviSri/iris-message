@@ -6,7 +6,7 @@ const Pkey = `0x${PK}`;
 const signer = new ethers.Wallet(Pkey);
 export const subscribeChannel =async()=>{
     let account = await getAccount();
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.providers.Web3Provider(window?.ethereum);
     const _signer = provider.getSigner();
     try{
         

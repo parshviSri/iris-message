@@ -1,8 +1,15 @@
 
 
-import { WorldIDWidget } from "@worldcoin/id";
+  // import { WorldIDWidget } from "@worldcoin/id";
+import dynamic from "next/dynamic";
+ const  WorldIDWidget  = dynamic(() =>import("@worldcoin/id"),{ssr:false});
+
 import { useState } from "react";
-import{connectContract,getAccount} from '../../utils/ether';
+import {
+  connectContract,
+  getAccount,
+  connectWorldCoin,
+} from "../../utils/ether";
 import { defaultAbiCoder as abi } from "@ethersproject/abi";
 
 const Verification = () => {
@@ -16,14 +23,7 @@ const Verification = () => {
       let nullifier_hash = verificationResponse?.nullifier_hash;
       let proof = abi.decode(["uint256[8]"], verificationResponse?.proof)[0];
       // eslint-disable-next-line
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-
-      const worldCoin = new ethers.Contract(
-        WorldCoinAddress,
-        WorldCoinIris.abi,
-        signer
-      );
+      const worldCoin = await connectWorldCoin(); 
       await worldCoin.verifyAndExecute(
         account,
         merkle_root,
