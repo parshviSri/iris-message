@@ -6,25 +6,17 @@ import { sendNotification } from "../../utils/ens";
 import axios from "axios";
 const SendMessage = (props) => {
   let user = props.user
-  console.log(props.receiver);
-  console.log(user);
   const [message, setMessage] = useState("");
   const [image, setImage] = useState(null);
   const [file, setFile] = useState(null);
-   console.log(props.receiver.tokenId._hex);
-    let tokenId = parseInt(props.receiver?.tokenId?._hex);
-    console.log(tokenId);
+    let tokenId = parseInt(props?.receiver?.tokenId?._hex);
   const addImage = async (e) => {
-    // console.log(e.target.files[0]);
 
-    let url = await addFile(e.target.files[0]);
-    // console.log(url);
+    let url = await addFile(e?.target?.files[0]);
     setImage(url);
   };
   const _addFile = async (e) => {
-    let url = await addFile(e.target.files[0]);
-    console.log(url);
-
+    let url = await addFile(e?.target?.files[0]);
     setFile(url);
   };
   const _sendMessage = async() =>{
@@ -156,7 +148,7 @@ const SendMessage = (props) => {
                           "
           placeholder="Send Your Message.."
           onChange={(e) => {
-            setMessage(e.target.value);
+            setMessage(e?.target?.value);
           }}
         ></textarea>
       </div>

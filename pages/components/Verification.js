@@ -8,15 +8,13 @@ const Verification = () => {
   const[verify,setVerify] = useState(false)
 
   const verfiyUser=async(verificationResponse)=>{
-    console.log(verificationResponse);
     let iris = await connectContract()
     if(verificationResponse){
       let account = await getAccount()
       let worldCoin = await connectWorldCoin();
-      let merkle_root = verificationResponse.merkle_root;
-      let nullifier_hash = verificationResponse.nullifier_hash;
-      let proof = abi.decode(["uint256[8]"], verificationResponse.proof)[0];
-      console.log(account, merkle_root, nullifier_hash, proof);
+      let merkle_root = verificationResponse?.merkle_root;
+      let nullifier_hash = verificationResponse?.nullifier_hash;
+      let proof = abi.decode(["uint256[8]"], verificationResponse?.proof)[0];
       let trans = await worldCoin.verifyAndExecute(
         account,
         merkle_root,
@@ -24,9 +22,6 @@ const Verification = () => {
         proof,
         { gasLimit: 10000000 }
       );
-      console.log(trans);
-      
-      
         setVerify(true)
     
       await iris.verifyYourAccount();
