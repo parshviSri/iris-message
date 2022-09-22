@@ -130,7 +130,9 @@ const SendMessage = (props) => {
     }
 
   }
-  
+  const recordMess = async(_media) =>{
+    props.getRecord(_media)
+  }
 
   return (
     <div className="shadow-md rounded bottom-0 w-full">
@@ -226,6 +228,9 @@ const SendMessage = (props) => {
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6"
+          onClick={() => {
+            recordMess("audio");
+          }}
         >
           <path
             strokeLinecap="round"
@@ -240,6 +245,9 @@ const SendMessage = (props) => {
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6"
+          onClick={() => {
+            recordMess("video");
+          }}
         >
           <path
             strokeLinecap="round"

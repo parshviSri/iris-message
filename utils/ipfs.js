@@ -1,8 +1,7 @@
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import { Buffer } from "buffer";
 const projectId = '2ETzwpUpgW6FtZDWvqvmqDmfHTt';
 const projectSecret = "ccde840a9fb902bc0a4445ffee1e0c05";
-// import { Blob } from "buffer";
+ import { Blob } from "buffer";
 const auth =
   "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
 
@@ -28,14 +27,14 @@ export const addFile = async (_file) => {
     console.log("Error uploading file: ", error);
   }
 };
-// export function makeFileObjects(jsonObj) {
-//   const blob = new Blob([JSON.stringify(jsonObj)], {
-//     type: "application/json",
-//   });
+export function makeFileObjects(jsonObj) {
+  const blob = new Blob([JSON.stringify(jsonObj)], {
+    type: "application/json",
+  });
 
-//   const files = [
-//     new File(["contents-of-file-1"], "plain-utf8.txt"),
-//     new File([blob], "hello.json"),
-//   ];
-//   return files;
-// }
+  const files = [
+    new File(["contents-of-file-1"], "plain-utf8.txt"),
+    new File([blob], "hello.json"),
+  ];
+  return files;
+}

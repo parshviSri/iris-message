@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { connectContract,getAccount } from "../utils/ether";
+import { connectContract } from "../utils/ether";
 import Contacts from "./components/Contacts";
 import ChatArea from "./components/Chatarea";
 import Head from "next/head";
@@ -38,7 +38,7 @@ const Dashboard = () => {
               </div>
             )}
           </div>
-          <div className="basis-1/2 border relative">
+          <div className="basis-3/4 border relative">
             {caller && <ChatArea caller={caller} user={_user} />}
           </div>
         </div>

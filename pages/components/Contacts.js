@@ -9,11 +9,11 @@ const Contacts =  (props) => {
   // console.log(user);
   const contact = useRef([]);
   const addNewContact = (_contact) => {
-     console.log(contact.current);
-     console.log(_contact);
+    //  console.log(contact.current);
+    //  console.log(_contact);
      if (contact.current){ contact.current = [...contact.current, _contact]}
      else{contact.current = [_contact]}
-    console.log(contact.current);
+    // console.log(contact.current);
   };
    useEffect(() => {
      const getuser = async () => {
