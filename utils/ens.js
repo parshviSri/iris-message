@@ -1,7 +1,7 @@
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 import { ethers } from "ethers";
-import { getAccount } from "./ether";
-const PK = "ccca2c9a919361f7df855c0ac60796c5298b76325c6d1fff91772e404ccb6c36"; // channel private key
+import { getAccount } from "./ether"; 
+const PK = "ccca2c9a919361f7df855c0ac60796c5298b76325c6d1fff91772e404ccb6c36";
 const Pkey = `0x${PK}`;
 const signer = new ethers.Wallet(Pkey);
 export const subscribeChannel =async()=>{
