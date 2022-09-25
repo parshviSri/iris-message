@@ -1,13 +1,5 @@
-# Sample Hardhat Project
+#Project Description
+It a web based messaging app for your social media Dapp which provides end to end encryption , on chain storage, keeps your identity private and help you share your life with your friends and family. You can send text, image messages to your contacts. You can create personalised voice or video messages as well. All you need is a wallet and search your friends with name or their registered wallet address and just start chatting and sharing with other. To personalise your profile you can use lens protocol for profile pic and name. Every message and media is stored in decentralised data storage and all the data will be encrypted and only user can see their message log. You can even verify if a person is real human or bot. Each new message they will get a notification on EPNS so they won't miss any of them. Iris is the only messaging dapp for social media with all these features. The world is moving towards a new social media era and it is important we provide a better and simpler solution to these app and Iris is one of the attempt in that direction.
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-GAS_REPORT=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+#How it's Made
+The Dapp is made using Next.js and tailwind and all our contract is developed using Solidity. For Registration and customisation of profile we are using @Lens protocol because they are gas less and used majorly for web3 social media. So If user update their Lens profile pic or their name it will be automatically updated in Iris. The project also uses @EPNS for sending notifications to the user whenever someone messages them. So that they don't miss any messages from their loved ones. The project uses @WorldCoin to check if the contact is actual person and user is talking to a real human being not a bot. Once verified by WorldCoin they have green tick confirming their verification The project uses @IPFS/filecoin for storage of messages and media shared by the user we are using @Infura for connection to Ipfs. The contract is deployed on @Polygon testnet and uses @Rainbow kit for wallet connection making on-chain Dapp. Polygon is the best layer solution /side chain available making our transaction extremely cheap. We provide complete decentralised, private and human verified communication solution to Web3 apps which support all for media transfer including voice and video messages.
